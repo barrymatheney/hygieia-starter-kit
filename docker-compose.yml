@@ -16,6 +16,8 @@ version: '3.4'
 services:
   sonarqube:
     image: sonarqube:8-community
+    hostname: sonarqube
+    container_name: sonarqube
     ports:
       - "9999:9000"
     volumes:
@@ -29,12 +31,16 @@ services:
       start_period: 5m
   mongodb:
     image: mongo:3.6
+    hostname: mongo
+    container_name: mongo
     ports:
       - "27017:27017"
     volumes:
       - ./data/mongodb:/data/db
   jenkins:
     build: ./jenkins
+    hostname: jenkins
+    container_name: jenkins
     ports:
       - "8888:8080"
       - "50000:50000"
@@ -50,6 +56,8 @@ services:
   hygieia:
     image: hygieiadoc/hygieia-starter-kit:latest
     build: ./hygieia-starter-kit
+    hostname: hygieia
+    container_name: hygieia
     depends_on:
       - mongodb
       - sonarqube
