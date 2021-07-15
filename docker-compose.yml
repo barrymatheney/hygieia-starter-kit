@@ -17,12 +17,12 @@ services:
   sonarqube:
     image: sonarqube:8-community
     ports:
-      - "9000:9000"
+      - "9999:9000"
     volumes:
       - ./data/sonarqube:/opt/sonarqube/data
       - ./logs/sonarqube:/opt/sonarqube/logs
     healthcheck:
-      test: wget -qO- http://localhost:9000/api/system/status | grep -q '"status":"UP"'
+      test: wget -qO- http://localhost:9999/api/system/status | grep -q '"status":"UP"'
       interval: 1m
       timeout: 10s
       retries: 3

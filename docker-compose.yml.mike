@@ -1,0 +1,72 @@
+version: '3.4'
+services:
+   sonarqube:
+     image: sonarqube:8-community
+     ports:
+       - "9000:9000"
+     volumes:
+       - ./data/sonarqube:/opt/sonarqube/data
+       - ./logs/sonarqube:/opt/sonarqube/logs
+     healthcheck:
+       test: wget -qO- http://localhost:9000/api/system/status | grep -q '"status":"UP"'
+       interval: 1m
+       timeout: 10s
+       retries: 3
+       start_period: 5m
+  mongodb:
+    image: mongo:3.6
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongodb
+#  jenkins:
+#    build: ./jenkins
+#    ports:
+#      - "8888:8080"
+#      - "50000:50000"
+#    volumes:
+#      - /root/mvasylchenko/hygieia/jenkins/data:/var/jenkins_home
+#      - /root/mvasylchenko/hygieia/jenkins/logs:/var/jenkins_home/logs
+#    healthcheck:
+#      test: wget -qO- http://localhost:8080/api/json?tree=mode | grep -q '"NORMAL"'
+#      interval: 1m
+#      timeout: 10s
+#      retries: 3
+#      start_period: 5m
+  hygieia:
+    image: hygieia-kit-git-3.1.7:latest
+    build: ./hygieia-starter-kit
+    privileged: true
+    depends_on:
+      - mongodb
+      - sonarqube
+#      - jenkins
+    ports:
+      - "80:80"
+      - "8888:8080"
+    environment:
+      - PROXY_URL=
+      - PROXY_PORT=
+      - PROXY_USERNAME=
+      - PROXY_PASSWORD=
+      - GITHUB_HOST=github.com
+#      - GITHUB_GRAPHQL_URL=
+#      - GITHUB_BASE_API_URL=
+      - GITHUB_CRON=0 1/5 * * * *
+       #See https://hygieia.github.io/Hygieia/troubleshoot.html for how to get a personal access token
+      - GITHUB_PERSONAL_ACCESS_TOKEN=6e9d641b1b1a53d3e0c57dde0424f23e254e8d58
+      - JENKINS_CRON=0 2/5 * * * *
+      - JENKINS_SERVER=http://bmatheney:roltide1@localhost:8080/
+      #- JENKINS_SERVER= http://jenkins:8080/
+      - SONAR_CRON=0 3/5 * * * *
+      - SONAR_HOST=http://localhost:9000/
+      - SONAR_VERSION=8.9
+      - SONAR_METRICS=ncloc,violations,new_vulnerabilities,critical_violations,major_violations,blocker_violations,tests,test_success_density,test_errors,test_failures,coverage,line_coverage,sqale_index,alert_status,quality_gate_details
+      - SONAR_USERNAME=admin
+      - SONAR_PASSWORD=fortnaRH11
+# If you want to view logs locally or have mongo data persisted uncomment out the below.
+    volumes:
+# This is for getting container logs locally
+      - './data/logs:/hygieia/logs'
+# This is for persisting data after the container has stopped
+#      - './data/mongo:/var/lib/mongo'
