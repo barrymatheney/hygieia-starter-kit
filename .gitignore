@@ -47,3 +47,5 @@ logs
 .pmdruleset.xml
 .pmd
 .classpath
+
+mvn-test-build

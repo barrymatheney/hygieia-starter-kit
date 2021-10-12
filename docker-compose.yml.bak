@@ -5,7 +5,7 @@
 # (the "License"); you may not use this file except in compliance with
 # the License.  You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0  
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -54,7 +54,7 @@ services:
     #   retries: 3
     #   start_period: 5m
   hygieia:
-    image: hygieia-kit-git-3.1.7:latest
+    image: hygieiadoc/hygieia-starter-kit:latest
     build: ./hygieia-starter-kit
     hostname: hygieia
     container_name: hygieia
@@ -77,13 +77,13 @@ services:
        #See https://hygieia.github.io/Hygieia/troubleshoot.html for how to get a personal access token
       - GITHUB_PERSONAL_ACCESS_TOKEN="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"
       - JENKINS_CRON=0 1/5 * * * *
-      - JENKINS_SERVER= http://localhost:8888/
+      - JENKINS_SERVER= http://jenkins:8888/
       - SONAR_CRON=0 3/5 * * * *
-      - SONAR_HOST=http://localhost:9999/
+      - SONAR_HOST=http://sonarqube:9999/
       - SONAR_VERSION=8.4
       - SONAR_METRICS=ncloc,violations,new_vulnerabilities,critical_violations,major_violations,blocker_violations,tests,test_success_density,test_errors,test_failures,coverage,line_coverage,sqale_index,alert_status,quality_gate_details
       - SONAR_USERNAME=admin
-      - SONAR_PASSWORD=roltide1
+      - SONAR_PASSWORD=admin
     privileged: true
 # If you want to view logs locally or have mongo data persisted uncomment out the below. 
     volumes:
