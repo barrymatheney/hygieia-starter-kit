@@ -19,7 +19,7 @@ services:
     hostname: ssh_host
     container_name: ssh_host
     ports:
-      - "22:2222"      
+      - "22:22"      
     volumes:
       - ./data/maven_repo:/data/maven_repo
   sonarqube:

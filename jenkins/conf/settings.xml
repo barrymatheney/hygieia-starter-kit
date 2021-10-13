@@ -16,4 +16,12 @@
             </properties>
         </profile>
     </profiles>
+      <servers>  
+    <server>  
+      <!-- this is the id of the repo tag specified in distributionManagement -->  
+      <id>repo</id>  
+      <username>root</username>  
+      <password>password1</password>  
+    </server>  
+  </servers> 
 </settings>
