@@ -14,12 +14,20 @@
 # limitations under the License.
 version: '3.4'
 services:
+  ssh_host:
+    build: ./ssh-host
+    hostname: ssh_host
+    container_name: ssh_host
+    ports:
+      - "22:2222"      
+    volumes:
+      - ./data/maven_repo:/data/maven_repo
   sonarqube:
     image: sonarqube:8-community
     hostname: sonarqube
     container_name: sonarqube
     ports:
-      - "9999:9000"
+      - "9000:9000"
     volumes:
       - ./data/sonarqube:/opt/sonarqube/data
       - ./logs/sonarqube:/opt/sonarqube/logs
@@ -89,6 +97,7 @@ services:
     volumes:
 # This is for getting container logs locally
       - './logs:/hygieia/logs'
+
 # This is for persisting data after the container has stopped
 #      - './db/data:/var/lib/mongo'
 
