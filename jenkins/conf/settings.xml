@@ -20,6 +20,7 @@
             </properties>
         </profile>
     </profiles>
+
     <servers>
         <server>
             <!-- this is for github https-->
@@ -28,4 +29,5 @@
             <password>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</password>
         </server>
     </servers>
+    
 </settings>
