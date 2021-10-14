@@ -2,9 +2,7 @@
     <pluginGroups>
         <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
     </pluginGroups>
-    <properties>
-        <project.scm.id>my-scm-server</project.scm.id>
-    </properties>
+
 
     <profiles>
         <profile>
@@ -24,10 +22,11 @@
     <servers>
         <server>
             <!-- this is for github https-->
-            <id>my-scm-server</id>
-            <username>barrymatheney</username>
-            <password>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</password>
+            <!--  <id>my-scm-server</id> -->
+            <!--  <username>barrymatheney</username> -->
+            <!--  <password>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</password> -->
+            <privateKey>/root/.ssh/id_rsa</privateKey>
         </server>
     </servers>
-    
+
 </settings>

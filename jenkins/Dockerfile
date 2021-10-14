@@ -26,7 +26,9 @@ COPY --chown=jenkins:jenkins conf/. "${JENKINS_HOME}/.m2/"
 COPY --chown=jenkins:jenkins id_rsa/. "${JENKINS_HOME}/.ssh/"
 
 RUN  git config --global user.email "nobody@nowhere.com"  && \
-  git config --global user.name "Dummy Name"
+  git config --global user.name "Dummy Name"  && \
+  chmod 644 /root/.ssh/id_rsa.pub && chmod 600 /root/.ssh/id_rsa  && \
+  chmod 644 ${JENKINS_HOME}/.ssh/id_rsa.pub && chmod 600 ${JENKINS_HOME}/.ssh/id_rsa 
 
 ENV PATH "${MAVEN_HOME}/bin:${PATH}"
 RUN printenv | sort  
