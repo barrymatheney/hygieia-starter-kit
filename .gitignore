@@ -49,3 +49,4 @@ logs
 .classpath
 
 mvn-test-build
+id_rsa

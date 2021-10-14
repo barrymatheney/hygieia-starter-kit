@@ -21,15 +21,6 @@
         </profile>
     </profiles>
     <servers>
-        <!-- this is the id of the repo tag specified in distributionManagement -->
-        <id>sshrepo</id>
-        <username>root</username>
-        <password>password1</password>
-        <server>
-            <id>ssh-repository</id>
-            <username>root</username>
-            <privateKey>/root/.ssh/id_rsa</privateKey>            <!-- not needed if using pageant -->
-        </server>
         <server>
             <!-- this is for github https-->
             <id>my-scm-server</id>
