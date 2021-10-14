@@ -14,14 +14,32 @@
 # limitations under the License.
 version: '3.4'
 services:
-  ssh_host:
-    build: ./ssh-host
-    hostname: ssh_host
-    container_name: ssh_host
+
+
+  git-lab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: 'gitlab.local'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.local'
     ports:
-      - "22:22"      
+      - '80:80'
+      - '443:443'
+      - '22:22'
     volumes:
-      - ./data/maven_repo:/data/maven_repo
+      - '/data/gitlab/config:/etc/gitlab'
+      - '/data/gitlab/logs:/var/log/gitlab'
+      - '/data/gitlab/data:/var/opt/gitlab'
+
+  # ssh_host:
+  #   build: ./ssh-host
+  #   hostname: ssh_host
+  #   container_name: ssh_host
+  #   ports:
+  #     - "22:22"      
+  #   volumes:
+  #     - ./data/maven_repo:/data/maven_repo
   sonarqube:
     image: sonarqube:8-community
     hostname: sonarqube
@@ -71,7 +89,7 @@ services:
       - sonarqube
       - jenkins
     ports:
-      - "80:80"
+      - "8989:80"
       - "8080:8080"
     environment: 
       - PROXY_URL=
