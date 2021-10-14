@@ -2,6 +2,10 @@
     <pluginGroups>
         <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
     </pluginGroups>
+    <properties>
+        <project.scm.id>my-scm-server</project.scm.id>
+    </properties>
+
     <profiles>
         <profile>
             <id>sonar</id>
@@ -16,12 +20,20 @@
             </properties>
         </profile>
     </profiles>
-      <servers>  
-    <server>  
-      <!-- this is the id of the repo tag specified in distributionManagement -->  
-      <id>repo</id>  
-      <username>root</username>  
-      <password>password1</password>  
-    </server>  
-  </servers> 
+    <servers>
+        <server>
+            <!-- this is the id of the repo tag specified in distributionManagement -->
+            <id>repo</id>
+            <username>root</username>
+            <password>password1</password>
+        </server>
+        <servers>
+            <server>
+                <!-- this is for github https-->
+                <id>my-scm-server</id>
+                <username>barrymatheney</username>
+                <password>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</password>
+            </server>
+        </servers>
+    </servers>
 </settings>
