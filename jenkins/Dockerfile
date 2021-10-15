@@ -2,7 +2,7 @@
 FROM jenkins/jenkins:lts-jdk11
 ARG JENKINS_HOME='/var/jenkins_home'
 USER root
-RUN apt-get update && apt-get install -y  wget git \
+RUN apt-get update && apt-get install -y  wget git nano inetutils-ping \
 && cd /usr/local && wget https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz && tar -zxvf openjdk-11+28_linux-x64_bin.tar.gz && rm openjdk-11+28_linux-x64_bin.tar.gz \
 && cd /usr/local && wget https://dlcdn.apache.org/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.tar.gz && tar -zxvf apache-maven-3.8.3-bin.tar.gz && rm apache-maven-3.8.3-bin.tar.gz
 

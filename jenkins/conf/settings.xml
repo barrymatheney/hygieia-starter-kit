@@ -22,10 +22,10 @@
     <servers>
         <server>
             <!-- this is for github https-->
-            <!--  <id>my-scm-server</id> -->
-            <!--  <username>barrymatheney</username> -->
-            <!--  <password>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</password> -->
-            <privateKey>/root/.ssh/id_rsa</privateKey>
+             <id>my-scm-server</id> 
+             <username>barrymatheney</username> 
+            <password>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</password> 
+                <!--             <privateKey>/root/.ssh/id_rsa</privateKey>  -->
         </server>
     </servers>
 
