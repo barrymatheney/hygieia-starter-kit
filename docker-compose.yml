@@ -14,23 +14,22 @@
 # limitations under the License.
 version: '3.4'
 services:
-
-
-  git-lab:
+  gitlab:
     image: 'gitlab/gitlab-ce:latest'
     restart: always
-    hostname: 'gitlab.local'
+    hostname: 'gitlab'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.local'
+        external_url 'http://gitlab.local:8888'
+        gitlab_rails['gitlab_shell_ssh_port'] = 22        
     ports:
-      - '80:80'
-      - '443:443'
+      - '8888:8888'
+      - '444:443'
       - '22:22'
     volumes:
-      - '/data/gitlab/config:/etc/gitlab'
-      - '/data/gitlab/logs:/var/log/gitlab'
-      - '/data/gitlab/data:/var/opt/gitlab'
+      - './data/gitlab/config:/etc/gitlab'
+      - './data/gitlab/logs:/var/log/gitlab'
+      - './data/gitlab/data:/var/opt/gitlab'
 
   # ssh_host:
   #   build: ./ssh-host
@@ -55,20 +54,20 @@ services:
     #   timeout: 10s
     #   retries: 3
     #   start_period: 5m
-  mongodb:
-    image: mongo:3.6
-    hostname: mongo
-    container_name: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./data/mongodb:/data/db
+  # mongodb:
+  #   image: mongo:3.6
+  #   hostname: mongo
+  #   container_name: mongo
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - ./data/mongodb:/data/db
   jenkins:
     build: ./jenkins
     hostname: jenkins
     container_name: jenkins
     ports:
-      - "8888:8080"
+      - "8080:8080"
       - "50000:50000"
     volumes:
       - ./data/jenkins:/var/jenkins_home
@@ -79,46 +78,5 @@ services:
     #   timeout: 10s
     #   retries: 3
     #   start_period: 5m
-  hygieia:
-    image: hygieia-kit-git-3.1.7:latest
-    build: ./hygieia-starter-kit
-    hostname: hygieia
-    container_name: hygieia
-    depends_on:
-      - mongodb
-      - sonarqube
-      - jenkins
-    ports:
-      - "8989:80"
-      - "8080:8080"
-    environment: 
-      - PROXY_URL=
-      - PROXY_PORT=
-      - PROXY_USERNAME=
-      - PROXY_PASSWORD=
-#      - GITHUB_HOST=github.com
-#      - GITHUB_GRAPHQL_URL=
-#      - GITHUB_BASE_API_URL=
-      - GITHUB_CRON=0 1/5 * * * *
-       #See https://hygieia.github.io/Hygieia/troubleshoot.html for how to get a personal access token
-      - GITHUB_PERSONAL_ACCESS_TOKEN="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"
-      - JENKINS_CRON=0 1/5 * * * *
-      - JENKINS_SERVER= http://localhost:8888/
-      - SONAR_CRON=0 3/5 * * * *
-      - SONAR_HOST=http://localhost:9999/
-      - SONAR_VERSION=8.4
-      - SONAR_METRICS=ncloc,violations,new_vulnerabilities,critical_violations,major_violations,blocker_violations,tests,test_success_density,test_errors,test_failures,coverage,line_coverage,sqale_index,alert_status,quality_gate_details
-      - SONAR_USERNAME=admin
-      - SONAR_PASSWORD=roltide1
-    privileged: true
-# If you want to view logs locally or have mongo data persisted uncomment out the below. 
-    volumes:
-# This is for getting container logs locally
-      - './logs:/hygieia/logs'
-
-# This is for persisting data after the container has stopped
-#      - './db/data:/var/lib/mongo'
-
-
 
   
